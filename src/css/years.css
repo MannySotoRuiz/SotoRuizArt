@@ -1,0 +1,88 @@
+* {
+    box-sizing: border-box;
+}
+  
+body {
+    margin: 0;
+}
+
+/* Global variables --------------------------- */
+:root {
+    --color-background: #ffffff;
+    --color-vertical-line: #af5f5f;
+    --color-horizontal-line: blue;
+    --color-postit-purple: #CE60F5;
+    --color-postit-round: #FAFF15;
+    --color-postit-win: #53D085;
+    --color-postit-lose: #E45353;
+    --color-postit-tie: #7995FA;
+}
+
+#years {
+    width: 100%;
+    min-height: 1000px;
+    /* background-color: var(--color-background);
+    background-image: 
+        linear-gradient(90deg, transparent 79px, var(--color-vertical-line) 79px, var(--color-vertical-line) 81px, transparent 81px),
+        linear-gradient(var(--color-horizontal-line) .1em, transparent .1em);
+    background-size: 100% 2rem; */
+}
+
+.header {
+    width: 100%;
+    min-height: 170px;
+    /* outline: 3px solid green; */
+    background-color: var(--color-background);
+    background-image: 
+        linear-gradient(90deg, transparent 79px, var(--color-vertical-line) 79px, var(--color-vertical-line) 81px, transparent 81px);
+    background-position: 100px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#yearsContent {
+    width: 100%;
+    min-height: 830px;
+    /* outline: 2px solid blue; */
+    /* margin-bottom: 10%; */
+    background-color: var(--color-background);
+    background-image: 
+        linear-gradient(90deg, transparent 79px, var(--color-vertical-line) 79px, var(--color-vertical-line) 81px, transparent 81px),
+        linear-gradient(var(--color-horizontal-line) .1em, transparent .1em);
+    background-size: 100% 2rem;
+    background-position: 100px 0;
+}
+
+#years img {
+    height: 100%;
+    width: 100%;
+    object-fit: fill;
+}
+
+/* #yearsContainer {
+    width: 100%;
+    min-height: 900px;
+    outline: 4px solid red;
+    position: absolute;
+    top: 0;
+    left: 0;
+} */
+
+.kateTitle {
+    width: 25%;
+    height: 100px;
+    /* outline: 3px solid orange; */
+}
+
+.kateTitle img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+#yearsLeftPanel {
+    width: 30%;
+    height: 680px;
+    outline: 3px solid purple;
+}
