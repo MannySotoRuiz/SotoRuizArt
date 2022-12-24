@@ -6,6 +6,18 @@ body {
   margin: 0;
 }
 
+/* Global variables --------------------------- */
+:root {
+  --color-background: #ffffff;
+  --color-vertical-line: #af5f5f;
+  --color-horizontal-line: blue;
+  --color-postit-purple: #CE60F5;
+  --color-postit-yellow: #FAFF15;
+  --color-postit-win: #53D085;
+  --color-postit-lose: #E45353;
+  --color-postit-tie: #7995FA;
+}
+
 #home {
   width: 100%;
   height: 950px;
@@ -24,7 +36,7 @@ body {
   height: 120px;
   /* outline: 2px solid red; */
   position: absolute;
-  top: 41%;
+  top: 40%;
   left: 27%;
   transform: rotate(-23deg);
 }
@@ -47,8 +59,93 @@ body {
   cursor: pointer;
 }
 
+.notebookContainer {
+  width: 100%;
+  min-height: 1000px;
+}
+
+.header {
+  width: 100%;
+  min-height: 170px;
+  /* outline: 3px solid green; */
+  background-color: var(--color-background);
+  background-image: 
+      linear-gradient(90deg, transparent 79px, var(--color-vertical-line) 79px, var(--color-vertical-line) 81px, transparent 81px);
+  background-position: 100px 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.nameTitle {
+  width: 27%;
+  height: 120px;
+  transform: rotate(1deg);
+  margin-top: 2%;
+  /* outline: 3px solid orange; */
+}
+
+.nameTitle img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.content {
+  width: 100%;
+  min-height: 830px;
+  /* outline: 2px solid blue; */
+  /* margin-bottom: 10%; */
+  background-color: var(--color-background);
+  background-image: 
+      linear-gradient(90deg, transparent 79px, var(--color-vertical-line) 79px, var(--color-vertical-line) 81px, transparent 81px),
+      linear-gradient(var(--color-horizontal-line) .1em, transparent .1em);
+  background-size: 100% 2rem;
+  background-position: 100px 0;
+  display: flex;
+}
+
 .leftPanel {
-  width: 30%;
-  height: 3000px;
-  outline: 3px solid purple;
+  width: 20%;
+  height: 830px;
+  /* outline: 3px solid purple; */
+  padding-top: 2%;
+  display: flex;
+  justify-content: center;
+}
+
+.rightPanel {
+  width: 80%;
+  height: 830px;
+  /* outline: 3px solid orangered; */
+}
+
+.panelPostIt {
+  width: 50%;
+  height: 15%;
+  background-color: var(--color-postit-yellow);
+  box-shadow: 0px 6px 8px rgba(33, 33, 33, .7);
+  transform: rotate(-1deg);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  /* transition: transform .15s linear; */
+}
+
+.subjectTitle {
+  width: 100%;
+  height: 180px;
+  /* outline: 2px solid orangered; */
+  display: flex;
+  align-items: center;
+}
+.subjectTitle img {
+  margin-left: 26%;
+}
+
+.rightPanelContent {
+  /* outline: 2px solid black; */
+  width: 100%;
+  min-height: 650px;
 }

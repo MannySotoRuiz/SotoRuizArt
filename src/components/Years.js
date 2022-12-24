@@ -1,25 +1,30 @@
-import kateTitle from "../images/kateTitle.png";
+import { useNavigate, useParams } from "react-router-dom";
 
 const Years = () => {
+    const  { id } = useParams();
+
+    const navigate = useNavigate();
+
     return (
-        <div id="years">
+        <div id="notebookContainer">
             <div className="header">
-                <div className="kateTitle">
-                    <img src={kateTitle} alt="Doodles fonts" />
+                <div className="nameTitle">
+                    <img src={require(`../images/${id}Title.png`)} alt="Doodles fonts" />
                 </div>
             </div>
-            <div id="yearsContent"></div>
-            {/* <img src={ notebookPage } alt="notebook page" />
-            <div id="yearsContainer">
-                <div id="holdNameTitle">
-                    <div className="kateTitle">
-                        <img src={kateTitle} alt="Doodles fonts" />
+            <div className="content">
+                <div className="leftPanel">
+                    <div className="panelPostIt">
+                        <img style={{width: "75%", height: "65%"}} src={require("../images/Home.png")} alt="Home" onClick={() => {navigate("/")}}/>
                     </div>
                 </div>
-                <div id="yearsLeftPanel">
-
+                <div className="rightPanel">
+                    <div className="subjectTitle">
+                        <img src={require("../images/Years.png")} alt="Years"/>
+                    </div>
+                    <div className="rightPanelContent"></div>
                 </div>
-            </div> */}
+            </div>
         </div>
     );
 }
