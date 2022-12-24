@@ -109,9 +109,12 @@ body {
   width: 20%;
   height: 830px;
   /* outline: 3px solid purple; */
-  padding-top: 2%;
+  padding-top: 1%;
+  padding-left: 4.5%;
+  /* padding: auto; */
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  /* justify-content: center; */
 }
 
 .rightPanel {
@@ -120,8 +123,8 @@ body {
   /* outline: 3px solid orangered; */
 }
 
-.panelPostIt {
-  width: 50%;
+.panelHomePostIt {
+  width: 200px;
   height: 15%;
   background-color: var(--color-postit-yellow);
   box-shadow: 0px 6px 8px rgba(33, 33, 33, .7);
@@ -130,6 +133,63 @@ body {
   justify-content: center;
   align-items: center;
   cursor: pointer;
+  margin-bottom: 15%;
+  /* transition: transform .15s linear; */
+}
+
+.panelYearsPostIt {
+  width: 200px;
+  height: 15%;
+  background-color: var(--color-postit-purple);
+  box-shadow: 0px 6px 8px rgba(33, 33, 33, .7);
+  transform: rotate(-1deg);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  margin-bottom: 15%;
+  /* transition: transform .15s linear; */
+}
+
+.panelDrawingsPostIt {
+  width: 200px;
+  height: 15%;
+  background-color: var(--color-postit-tie);
+  box-shadow: 0px 6px 8px rgba(33, 33, 33, .7);
+  transform: rotate(-1deg);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  margin-bottom: 15%;
+  /* transition: transform .15s linear; */
+}
+
+.panelPaintingsPostIt {
+  width: 200px;
+  height: 15%;
+  background-color: var(--color-postit-win);
+  box-shadow: 0px 6px 8px rgba(33, 33, 33, .7);
+  transform: rotate(-1deg);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  margin-bottom: 15%;
+  /* transition: transform .15s linear; */
+}
+
+.panelCraftsPostIt {
+  width: 200px;
+  height: 15%;
+  background-color: var(--color-postit-lose);
+  box-shadow: 0px 6px 8px rgba(33, 33, 33, .7);
+  transform: rotate(-1deg);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  margin-bottom: 15%;
   /* transition: transform .15s linear; */
 }
 
@@ -139,13 +199,17 @@ body {
   /* outline: 2px solid orangered; */
   display: flex;
   align-items: center;
+  flex-wrap: nowrap , wrap , wrap-reverse;
 }
 .subjectTitle img {
   margin-left: 26%;
 }
 
-.rightPanelContent {
+.subjectContent {
   /* outline: 2px solid black; */
   width: 100%;
   min-height: 650px;
+  padding-top: 3%;
+  /* display: flex; */
+  /* flex-direction: row; */
 }
