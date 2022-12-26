@@ -32,6 +32,9 @@ const Menu = () => {
                     <div className="panelYearsPostIt">
                         <img style={{width: "75%", height: "65%"}} src={require("../images/yearsPanel.png")} alt="Home" onClick={handleYearsPanelClick}/>
                     </div>
+                    <div className="panelPostIt panelViewAllPostIt">
+                        <img style={{width: "85%", height: "55%"}} src={require("../images/viewAll.png")} alt="View All" onClick={() => {navigate("/")}}/>
+                    </div>
                 </div>
 
                 <div className="rightPanel">
@@ -42,13 +45,13 @@ const Menu = () => {
                         <div className="rowSample">
                             <div className="cardSample" onClick={handleCategoryClick}>
                                 <div className="imgSample">
-                                    <img src={require("../images/drawingSample.jpg")} alt="Drawings"/>
+                                    <img src={require("../images/drawingsSample.jpg")} alt="Drawings"/>
                                 </div>
                                 <div className="cardText">Drawings</div>
                             </div>
                             <div className="cardSample" onClick={handleCategoryClick}>
                                 <div className="imgSample">
-                                    <img src={require("../images/paintingSample.jpg")} alt="Paintings"/>
+                                    <img src={require("../images/paintingsSample.jpg")} alt="Paintings"/>
                                 </div>
                                 <div className="cardText">Paintings</div>
                             </div>
@@ -62,7 +65,7 @@ const Menu = () => {
                             </div>
                             <div className="cardSample" onClick={handleCategoryClick}>
                                 <div className="imgSample">
-                                    <img src={require("../images/sculptureSample.png")} alt="Sculptures"/>
+                                    <img src={require("../images/sculpturesSample.png")} alt="Sculptures"/>
                                 </div>
                                 <div className="cardText">Sculptures</div>
                             </div>

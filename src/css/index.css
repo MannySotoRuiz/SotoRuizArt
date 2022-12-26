@@ -137,6 +137,20 @@ body {
   /* transition: transform .15s linear; */
 }
 
+.panelViewAllPostIt {
+  width: 200px;
+  height: 15%;
+  background-color: var(--color-postit-win);
+  box-shadow: 0px 6px 8px rgba(33, 33, 33, .7);
+  transform: rotate(-1deg);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  margin-bottom: 15%;
+  /* transition: transform .15s linear; */
+}
+
 .panelYearsPostIt {
   width: 200px;
   height: 15%;

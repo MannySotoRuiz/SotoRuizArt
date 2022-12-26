@@ -7,6 +7,26 @@ const Category = () => {
     const splitPath = location.pathname.split("/");
     const getName = splitPath[1];
     const getYear = splitPath[3];
+    console.log(id);
+
+    const getImage = ["sample1", "sample2", "sample3", "sample4"];
+    const allRows = Math.ceil(getImage.length / 3);
+    let imgsGroup = [];
+    let imgIndex = 0;
+    for (let i = 0; i < allRows; i++) {
+        let holdImages = [];
+        for (let j = imgIndex; j < getImage.length; j++) {
+            holdImages.push(getImage[j]);
+            imgIndex++;
+            if (holdImages.length === 3) {
+                imgsGroup.push(holdImages);
+                break;
+            }
+            if (j === (getImage.length - 1)) {
+                imgsGroup.push(holdImages);
+            }
+        }
+    }
 
     return (
         <div className="notebookContainer">
@@ -41,7 +61,42 @@ const Category = () => {
                     <div style={{ paddingRight: "25%" }} className="subjectTitle">
                         <img src={require(`../images/${id}Title.png`)} alt="Catgory Title" />
                     </div>
-                    <div className="subjectContent">
+                    <div style={{ paddingTop: "0%", paddingLeft: "10%" }} className="subjectContent">
+                        {/* <div className="categoryRow">
+                            <div className="categoryCard">
+                                <div className="categoryCardImg">
+                                    <img src={require(`../images/drawingSample.jpg`)} alt="pic display"/>
+                                </div>
+                                <div className="categoryCardText"><p>Drawing Sample</p></div>
+                            </div>
+                        </div> */}
+                        {imgsGroup.map((row, idx) => {
+                            return (
+                                <div className="categoryRow" key={idx}>
+                                    {row.map((img, i) => {
+                                        if (id === "sculptures") {
+                                            return (
+                                                <div className="categoryCard" key={i}>
+                                                    <div className="categoryCardImg">
+                                                        <img src={require(`../images/${id}Sample.png`)} alt="categoryCardImg"/>
+                                                    </div>
+                                                    <div className="categoryCardText"><p>Drawing Sample</p></div>
+                                                </div>
+                                            )
+                                        } else {
+                                            return (
+                                                <div className="categoryCard" key={i}>
+                                                    <div className="categoryCardImg">
+                                                        <img src={require(`../images/${id}Sample.jpg`)} alt="categoryCardImg"/>
+                                                    </div>
+                                                    <div className="categoryCardText"><p>Drawing Sample</p></div>
+                                                </div>
+                                            )
+                                        }
+                                    })}
+                                </div>
+                            )
+                        })}
                     </div>
                 </div>
             </div>

@@ -1,0 +1,55 @@
+@import url('https://fonts.googleapis.com/css2?family=Indie+Flower&display=swap');
+
+* {
+    box-sizing: border-box;
+}
+  
+body {
+    margin: 0;
+}
+
+p {
+    margin: 0;
+}
+
+.categoryRow {
+    width: 100%;
+    height: 200px;
+    display: flex;
+    gap: 8%;
+    margin-bottom: 5%;
+    /* outline: 1px solid blueviolet; */
+}
+
+.categoryCard {
+    width: 20%;
+    height: 100%;
+    /* border-radius: 90%; */
+    /* outline: 2px solid blue; */
+}
+.categoryCardImg {
+    width: 100%;
+    height: 80%;
+    cursor: pointer;
+    /* outline: 3px solid red; */
+}
+.categoryCardImg img {
+    width: 100%;
+    height: 100%;
+    border-top-left-radius: 4%;
+    border-top-right-radius: 4%;
+    object-fit: fill;
+}
+.categoryCardText {
+    width: 100%;
+    height: 20%;
+    border-bottom-left-radius: 5%;
+    border-bottom-right-radius: 5%;
+    background-color: #ecf2f4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: "Indie Flower", cursive;
+    font-size: 25px;
+    /* outline: 4px solid green; */
+}

@@ -44,6 +44,9 @@ const Years = () => {
                     <div className="panelPostIt panelHomePostIt">
                         <img style={{width: "75%", height: "65%"}} src={require("../images/Home.png")} alt="Home" onClick={() => {navigate("/")}}/>
                     </div>
+                    <div className="panelPostIt panelViewAllPostIt">
+                        <img style={{width: "85%", height: "55%"}} src={require("../images/viewAll.png")} alt="View All" onClick={() => {navigate("/")}}/>
+                    </div>
                 </div>
                 <div className="rightPanel">
                     <div className="subjectTitle">
