@@ -1,6 +1,22 @@
 const mongoose = require("mongoose");
 const Art = require("../models/ArtModel");
 
+// get art projects
+const getArtProjects = async(req, res) => {
+    const { artist, category, year } = req.body;
+    if (!year && !category) { // get all art projects from artist
+        console.log("year empty");
+        const artProjects = await Art.find({artist:artist}).sort({createdAt: -1});
+        res.status(200).json(artProjects);
+        return;
+    }
+
+    const artProjects = await Art.find({artist:artist, category:category, year:year}).sort({createdAt: -1});
+    // const arrArtProjects = Object.keys(artProjects); // convert object to array
+
+    res.status(200).json(artProjects);
+}
+
 // create art
 const createArt = async (req, res) => {
     const { artist, title, category, year, artImage } = req.body;
@@ -30,4 +46,4 @@ const createArt = async (req, res) => {
     }
 }
 
-module.exports = { createArt };
+module.exports = { createArt, getArtProjects };
