@@ -4,6 +4,7 @@
 
 body {
   margin: 0;
+  /* padding: 20px; */
 }
 
 /* Global variables --------------------------- */
@@ -66,7 +67,7 @@ body {
 
 .header {
   width: 100%;
-  min-height: 170px;
+  min-height: 130px;
   /* outline: 3px solid green; */
   background-color: var(--color-background);
   background-image: 
@@ -78,10 +79,9 @@ body {
 }
 
 .nameTitle {
-  width: 27%;
+  width: 30%;
   height: 120px;
   transform: rotate(1deg);
-  margin-top: 2%;
   /* outline: 3px solid orange; */
 }
 
@@ -93,7 +93,7 @@ body {
 
 .content {
   width: 100%;
-  min-height: 830px;
+  min-height: 880px;
   /* outline: 2px solid blue; */
   /* margin-bottom: 10%; */
   background-color: var(--color-background);
@@ -215,15 +215,48 @@ body {
   align-items: center;
   flex-wrap: nowrap , wrap , wrap-reverse;
 }
-.subjectTitle img {
+
+.yearsTitleImg {
+  width: 20%;
+  height: 50%;
   margin-left: 26%;
+}
+
+.menuTitleImg {
+  width: 40%;
+  height: 50%;
+  margin-left: 27%;
+}
+
+.drawingsTitleImg {
+  width: 40%;
+  height: 50%;
+  margin-left: 28%;
+}
+
+.paintingsTitleImg {
+  width: 40%;
+  height: 45%;
+  margin-left: 28%;
+}
+
+.craftsTitleImg {
+  width: 35%;
+  height: 45%;
+  margin-left: 32%;
+}
+
+.sculpturesTitleImg {
+  width: 40%;
+  height: 45%;
+  margin-left: 28%;
 }
 
 .subjectContent {
   /* outline: 2px solid black; */
   width: 100%;
   min-height: 650px;
-  padding-top: 3%;
+  /* padding-top: 3%; */
   /* display: flex; */
   /* flex-direction: row; */
 }

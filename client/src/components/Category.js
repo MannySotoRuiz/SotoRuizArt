@@ -59,17 +59,9 @@ const Category = () => {
 
                 <div className="rightPanel">
                     <div style={{ paddingRight: "25%" }} className="subjectTitle">
-                        <img src={require(`../images/${id}Title.png`)} alt="Catgory Title" />
+                        <img className={`${id}TitleImg`} src={require(`../images/${id}Title.png`)} alt="Catgory Title" />
                     </div>
-                    <div style={{ paddingTop: "0%", paddingLeft: "10%" }} className="subjectContent">
-                        {/* <div className="categoryRow">
-                            <div className="categoryCard">
-                                <div className="categoryCardImg">
-                                    <img src={require(`../images/drawingSample.jpg`)} alt="pic display"/>
-                                </div>
-                                <div className="categoryCardText"><p>Drawing Sample</p></div>
-                            </div>
-                        </div> */}
+                    <div style={{ paddingTop: "0%", paddingLeft: "4%" }} className="subjectContent">
                         {imgsGroup.map((row, idx) => {
                             return (
                                 <div className="categoryRow" key={idx}>

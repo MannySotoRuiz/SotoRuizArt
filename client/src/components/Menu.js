@@ -39,7 +39,7 @@ const Menu = () => {
 
                 <div className="rightPanel">
                     <div style={{ paddingRight: "25%" }} className="subjectTitle">
-                        <img src={require("../images/Category.png")} alt="Category"/>
+                        <img className="menuTitleImg" src={require("../images/Category.png")} alt="Category"/>
                     </div>
                     <div className="subjectContent">
                         <div className="rowSample">

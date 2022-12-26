@@ -50,7 +50,7 @@ const Years = () => {
                 </div>
                 <div className="rightPanel">
                     <div className="subjectTitle">
-                        <img src={require("../images/Years.png")} alt="Years"/>
+                        <img className="yearsTitleImg" src={require("../images/Years.png")} alt="Years"/>
                     </div>
                     <div className="subjectContent">
                         {yearsGroup.map((row, idx) => {
