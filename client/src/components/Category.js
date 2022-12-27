@@ -1,32 +1,30 @@
 import { useNavigate, useParams, useLocation } from "react-router-dom";
-import { useGetArtProjects } from "../hooks/useGetArtProjects";
 import { useEffect, useState } from "react";
 
 const Category = () => {
 
-    const { getart, error } = useGetArtProjects();
-    const { id } = useParams();
-    const location = useLocation();
     const navigate = useNavigate();
-    const splitPath = location.pathname.split("/");
-    const getName = splitPath[1];
-    const getYear = splitPath[3];
-    const [allImages, setImages] = useState([]);
-    // const [getName, setName] = useState("");
-    // const [getYear, setYear] = useState("");
+    const { id } = useParams(); // get the category picked from user
+    const location = useLocation();
+    const splitPath = location.pathname.split("/"); // get the current path that user is on
+    const getName = splitPath[1]; // get name from the path
+    const getYear = splitPath[3]; // get the year from the path
+    localStorage.setItem("name", JSON.stringify(splitPath[1])); // store name in localstorage
+    localStorage.setItem("year", JSON.stringify(splitPath[3])); // store year in localstorage
+    const [allImages, setImages] = useState([]);    // used to store all the art projects that need to be displayed
+    const [fetchError, setError] = useState(null);  // used if error when fetching from backend
 
     useEffect(() => {
         const getAllArt = async () => {
-            const tempName = splitPath[1];
-            const tempYear = splitPath[3];
+            const tempName = JSON.parse(localStorage.getItem("name"));
+            const tempYear = JSON.parse(localStorage.getItem("year"));
             let name;
             if (tempName === "kate") {
                 name = "Kate";
             } else {
                 name = "Emily";
             }
-            await getart(name, id, tempYear);
-            const getProjects = JSON.parse(localStorage.getItem("artProjects"));
+            const getProjects = await fetchImages(name, id, tempYear);
 
             const allRows = Math.ceil(getProjects.length / 3);
             let imgsGroup = [];
@@ -47,8 +45,29 @@ const Category = () => {
             }
             setImages(imgsGroup);
         };
+        const fetchImages = async (artist, category, year) => {
+            setError(null);
+            const params = { artist: artist, category: category, year: year };
+            const response = await fetch(`/api/arts/getart?${new URLSearchParams(params)}`);
+            const json = await response.json();
+            if (response.ok) {
+                console.log("successfully fetched art projects");
+                if (json.length === 0) {
+                    setError("No art projects exist");
+                } 
+                return json;
+            } else {
+                console.log("Error when fetching art projects");
+                setError(json.error);
+            }
+        }
         getAllArt();
     }, [id]);
+
+    function handleArtClicked(event, project) {
+        console.log(event.currentTarget);
+        console.log(project);
+    }
 
     return (
         <div className="notebookContainer">
@@ -59,23 +78,23 @@ const Category = () => {
             </div>
             <div className="content">
                 <div className="leftPanel">
-                    <div className="panelHomePostIt">
-                        <img style={{width: "75%", height: "65%"}} src={require("../images/Home.png")} alt="Home" onClick={() => {navigate("/")}}/>
+                    <div className="panelHomePostIt" onClick={() => {navigate("/")}}>
+                        <img style={{width: "75%", height: "65%"}} src={require("../images/Home.png")} alt="Home"/>
                     </div>
-                    <div className="panelYearsPostIt">
-                        <img style={{width: "75%", height: "65%"}} src={require("../images/yearsPanel.png")} alt="Years" onClick={() => {navigate(`/${getName}/years`)}}/>
+                    <div className="panelYearsPostIt" onClick={() => {navigate(`/${getName}/years`)}}>
+                        <img style={{width: "75%", height: "65%"}} src={require("../images/yearsPanel.png")} alt="Years"/>
                     </div>
-                    <div className="panelDrawingsPostIt">
-                        <img style={{width: "85%", height: "75%"}} src={require("../images/drawings.png")} alt="Drawings" onClick={() => {navigate(`/${getName}/years/${getYear}/drawings`)}}/>
+                    <div className="panelDrawingsPostIt" onClick={() => {navigate(`/${getName}/years/${getYear}/drawings`)}}>
+                        <img style={{width: "85%", height: "75%"}} src={require("../images/drawings.png")} alt="Drawings"/>
                     </div>
-                    <div className="panelPaintingsPostIt">
-                        <img style={{width: "85%", height: "65%"}} src={require("../images/paintings.png")} alt="Paintings" onClick={() => {navigate(`/${getName}/years/${getYear}/paintings`)}}/>
+                    <div className="panelPaintingsPostIt" onClick={() => {navigate(`/${getName}/years/${getYear}/paintings`)}}>
+                        <img style={{width: "85%", height: "65%"}} src={require("../images/paintings.png")} alt="Paintings"/>
                     </div>
-                    <div className="panelCraftsPostIt">
-                        <img style={{width: "75%", height: "65%"}} src={require("../images/crafts.png")} alt="Crafts" onClick={() => {navigate(`/${getName}/years/${getYear}/crafts`)}}/>
+                    <div className="panelCraftsPostIt" onClick={() => {navigate(`/${getName}/years/${getYear}/crafts`)}}>
+                        <img style={{width: "75%", height: "65%"}} src={require("../images/crafts.png")} alt="Crafts"/>
                     </div>
-                    <div className="panelYearsPostIt">
-                        <img style={{width: "87%", height: "77%"}} src={require("../images/sculptures.png")} alt="Sculptures" onClick={() => {navigate(`/${getName}/years/${getYear}/sculptures`)}}/>
+                    <div className="panelYearsPostIt" onClick={() => {navigate(`/${getName}/years/${getYear}/sculptures`)}}>
+                        <img style={{width: "87%", height: "77%"}} src={require("../images/sculptures.png")} alt="Sculptures"/>
                     </div>
                 </div>
 
@@ -84,30 +103,19 @@ const Category = () => {
                         <img className={`${id}TitleImg`} src={require(`../images/${id}Title.png`)} alt="Catgory Title" />
                     </div>
                     <div style={{ paddingTop: "0%", paddingLeft: "4%" }} className="subjectContent">
-                        {error && <div className="error">{error}</div>}
+                        {fetchError && <div className="error">{fetchError}</div>}
                         {allImages.map((row, idx) => {
                             return (
                                 <div className="categoryRow" key={idx}>
-                                    {row.map((img, i) => {
-                                        if (id === "sculptures") {
-                                            return (
-                                                <div className="categoryCard" key={i}>
-                                                    <div className="categoryCardImg">
-                                                        <img src={require(`../images/${id}Sample.png`)} alt="categoryCardImg"/>
-                                                    </div>
-                                                    <div className="categoryCardText"><p>Drawing Sample</p></div>
+                                    {row.map((project, i) => {
+                                        return (
+                                            <div className="categoryCard" key={i} onClick={(e) => handleArtClicked(e, project)}>
+                                                <div className="categoryCardImg">
+                                                    <img src={project.artImage} alt={project.title}/>
                                                 </div>
-                                            )
-                                        } else {
-                                            return (
-                                                <div className="categoryCard" key={i}>
-                                                    <div className="categoryCardImg">
-                                                        <img src={require(`../images/${id}Sample.jpg`)} alt="categoryCardImg"/>
-                                                    </div>
-                                                    <div className="categoryCardText"><p>Drawing Sample</p></div>
-                                                </div>
-                                            )
-                                        }
+                                                <div className="categoryCardText"><p>{project.title}</p></div>
+                                            </div>
+                                        )
                                     })}
                                 </div>
                             )
