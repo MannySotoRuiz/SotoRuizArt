@@ -1,12 +1,16 @@
 const express = require("express");
 
-const { createArt, getArtProjects, getAllProjects } = require("../controllers/artController");
+const { createArt, getArtProjects, getAllProjects, getArtistCategory } = require("../controllers/artController");
 
 const router = express.Router();
 
+// get all art projects from artist
 router.get("/", getAllProjects);
 
-// get art projects
+// get all art projects from artist based on category
+router.get("/getartcategory", getArtistCategory);
+
+// get art projects from artist based on category and year
 router.get("/getart", getArtProjects);
 
 // create art route

@@ -10,7 +10,7 @@ const Gallery = () => {
 
     const leftPanelList = [
         {class: "panelHomePostIt", imageURL: "../images/Home.png", alt: "Home", style: {width: "75%", height: "65%"}, navigate: "/"},
-        {class: "panelViewAllPostIt", imageURL: "../images/viewAll.png", alt: "Gallery", style: {width: "85%", height: "55%"}, navigate: `/${id}/gallery`}
+        {class: "panelViewAllPostIt", imageURL: "../images/menuTitle.png", alt: "Gallery", style: {width: "85%", height: "55%"}, navigate: `/${id}/gallery`}
     ];
 
     const [allImages, setImages] = useState([]);    // used to store all the art projects that need to be displayed

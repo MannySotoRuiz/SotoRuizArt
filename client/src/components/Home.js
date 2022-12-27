@@ -9,7 +9,7 @@ const Home = () => {
 
     const handleClick = (event) => {
         const name = event.currentTarget.parentNode.children[0].alt;
-        navigate(`/${name}/years`);
+        navigate(`/${name}/gallery`);
     }
 
     return (

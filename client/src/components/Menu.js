@@ -1,29 +1,23 @@
-import { useNavigate, useParams, useLocation } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Header from "./Header";
-import LeftPanel from "./LeftPanel";
+// import LeftPanel from "./LeftPanel";
 
 const Menu = () => {
     const { id } = useParams();
-    const location = useLocation();
+    const getName = id;
     const navigate = useNavigate();
-    const splitPath = location.pathname.split("/");
-    const getName = splitPath[1];
-
-    const handleYearsPanelClick = () => {
-        navigate(`/${getName}/years`);
-    }
 
     const handleCategoryClick = (event) => {
         const getCategory = event.currentTarget.children[1].innerText;
         const category = getCategory.toLowerCase(); 
-        navigate(`/${getName}/years/${id}/${category}`);
+        navigate(`/${getName}/${category}`);
     }
 
-    const leftPanelList = [
-        {class: "panelHomePostIt", imageURL: "../images/Home.png", alt: "Home", style: {width: "75%", height: "65%"}, navigate: "/"},
-        {class: "panelYearsPostIt", imageURL: "../images/yearsPanel.png", alt: "Years", style: {width: "75%", height: "65%"}, navigate: `/${getName}/years`},
-        {class: "panelViewAllPostIt", imageURL: "../images/viewAll.png", alt: "Gallery", style: {width: "75%", height: "65%"}, navigate: `/${getName}/gallery`}
-    ];
+    // const leftPanelList = [
+    //     {class: "panelHomePostIt", imageURL: "../images/Home.png", alt: "Home", style: {width: "75%", height: "65%"}, navigate: "/"},
+    //     {class: "panelYearsPostIt", imageURL: "../images/yearsPanel.png", alt: "Years", style: {width: "75%", height: "65%"}, navigate: `/${getName}/years`},
+    //     {class: "panelViewAllPostIt", imageURL: "../images/viewAll.png", alt: "Gallery", style: {width: "75%", height: "65%"}, navigate: `/${getName}/gallery`}
+    // ];
 
     return (
         <div className="notebookContainer">
@@ -33,11 +27,8 @@ const Menu = () => {
                     <div className="panelHomePostIt">
                         <img style={{width: "75%", height: "65%"}} src={require("../images/Home.png")} alt="Home" onClick={() => {navigate("/")}}/>
                     </div>
-                    <div className="panelYearsPostIt">
-                        <img style={{width: "75%", height: "65%"}} src={require("../images/yearsPanel.png")} alt="Home" onClick={handleYearsPanelClick}/>
-                    </div>
                     <div className="panelViewAllPostIt">
-                        <img style={{width: "85%", height: "55%"}} src={require("../images/viewAll.png")} alt="View All" onClick={() => {navigate("/")}}/>
+                        <img style={{width: "85%", height: "55%"}} src={require("../images/viewAll.png")} alt="View All" onClick={() => {navigate(`/${getName}/gallery`)}}/>
                     </div>
                 </div>
                 {/* <LeftPanel list={ leftPanelList } /> */}

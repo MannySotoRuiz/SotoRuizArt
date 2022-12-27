@@ -3,17 +3,18 @@ import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import Modal from "./Modal";
 import Header from "./Header";
+// import LeftPanel from "./LeftPanel";
 
 const Category = () => {
 
     const navigate = useNavigate();
     const { id } = useParams(); // get the category picked from user
+    console.log(id);
     const location = useLocation();
     const splitPath = location.pathname.split("/"); // get the current path that user is on
     const getName = splitPath[1]; // get name from the path
-    const getYear = splitPath[3]; // get the year from the path
+    console.log(getName);
     localStorage.setItem("name", JSON.stringify(splitPath[1])); // store name in localstorage
-    localStorage.setItem("year", JSON.stringify(splitPath[3])); // store year in localstorage
     const [allImages, setImages] = useState([]);    // used to store all the art projects that need to be displayed
     const [fetchError, setError] = useState(null);  // used if error when fetching from backend
     const [selected, setSelected] = useState(null);
@@ -21,14 +22,13 @@ const Category = () => {
     useEffect(() => {
         const getAllArt = async () => {
             const tempName = JSON.parse(localStorage.getItem("name"));
-            const tempYear = JSON.parse(localStorage.getItem("year"));
             let name;
             if (tempName === "kate") {
                 name = "Kate";
             } else {
                 name = "Emily";
             }
-            const getProjects = await fetchImages(name, id, tempYear);
+            const getProjects = await fetchImages(name, id);
 
             const allRows = Math.ceil(getProjects.length / 3);
             let imgsGroup = [];
@@ -49,10 +49,10 @@ const Category = () => {
             }
             setImages(imgsGroup);
         };
-        const fetchImages = async (artist, category, year) => {
+        const fetchImages = async (artist, category) => {
             setError(null);
-            const params = { artist: artist, category: category, year: year };
-            const response = await fetch(`/api/arts/getart?${new URLSearchParams(params)}`);
+            const params = { artist: artist, category: category };
+            const response = await fetch(`/api/arts/getartcategory?${new URLSearchParams(params)}`);
             const json = await response.json();
             if (response.ok) {
                 console.log("successfully fetched art projects");
@@ -79,6 +79,11 @@ const Category = () => {
         );
     }
 
+    // const leftPanelList = [
+    //     {class: "panelHomePostIt", imageURL: "../images/Home.png", alt: "Home", style: {width: "75%", height: "65%"}, navigate: "/"},
+    //     {class: "panelViewAllPostIt", imageURL: "../images/viewAll.png", alt: "Gallery", style: {width: "75%", height: "65%"}, navigate: `/${getName}/gallery`}
+    // ];
+
     return (
         <div className="notebookContainer">
             <Header name={getName}/>
@@ -87,19 +92,19 @@ const Category = () => {
                     <div className="panelHomePostIt" onClick={() => {navigate("/")}}>
                         <img style={{width: "75%", height: "65%"}} src={require("../images/Home.png")} alt="Home"/>
                     </div>
-                    <div className="panelYearsPostIt" onClick={() => {navigate(`/${getName}/years`)}}>
-                        <img style={{width: "75%", height: "65%"}} src={require("../images/yearsPanel.png")} alt="Years"/>
+                    <div className="panelYearsPostIt" onClick={() => {navigate(`/${getName}/menu`)}}>
+                        <img style={{width: "75%", height: "60%"}} src={require("../images/menuTitle.png")} alt="Years"/>
                     </div>
-                    <div className="panelDrawingsPostIt" onClick={() => {navigate(`/${getName}/years/${getYear}/drawings`)}}>
+                    <div className="panelDrawingsPostIt" onClick={() => {navigate(`/${getName}/drawings`)}}>
                         <img style={{width: "85%", height: "75%"}} src={require("../images/drawings.png")} alt="Drawings"/>
                     </div>
-                    <div className="panelPaintingsPostIt" onClick={() => {navigate(`/${getName}/years/${getYear}/paintings`)}}>
+                    <div className="panelPaintingsPostIt" onClick={() => {navigate(`/${getName}/paintings`)}}>
                         <img style={{width: "85%", height: "65%"}} src={require("../images/paintings.png")} alt="Paintings"/>
                     </div>
-                    <div className="panelCraftsPostIt" onClick={() => {navigate(`/${getName}/years/${getYear}/crafts`)}}>
+                    <div className="panelCraftsPostIt" onClick={() => {navigate(`/${getName}/crafts`)}}>
                         <img style={{width: "75%", height: "65%"}} src={require("../images/crafts.png")} alt="Crafts"/>
                     </div>
-                    <div className="panelYearsPostIt" onClick={() => {navigate(`/${getName}/years/${getYear}/sculptures`)}}>
+                    <div className="panelYearsPostIt" onClick={() => {navigate(`/${getName}/sculptures`)}}>
                         <img style={{width: "87%", height: "77%"}} src={require("../images/sculptures.png")} alt="Sculptures"/>
                     </div>
                 </div>
