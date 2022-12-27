@@ -1,8 +1,10 @@
 const express = require("express");
 
-const { createArt, getArtProjects } = require("../controllers/artController");
+const { createArt, getArtProjects, getAllProjects } = require("../controllers/artController");
 
 const router = express.Router();
+
+router.get("/", getAllProjects);
 
 // get art projects
 router.get("/getart", getArtProjects);

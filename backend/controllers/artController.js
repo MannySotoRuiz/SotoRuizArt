@@ -1,12 +1,20 @@
 const mongoose = require("mongoose");
 const Art = require("../models/ArtModel");
 
+const getAllProjects = async(req, res) => {
+    const artist = req.query.param1;
+    const artProjects = await Art.find({artist:artist}).sort({createdAt: -1});
+    res.status(200).json(artProjects);
+}
+
+
 // get art projects
 const getArtProjects = async(req, res) => {
     const { artist, category, year } = req.query;
     if (!year && !category) { // get all art projects from artist
         console.log("year empty");
         const artProjects = await Art.find({artist:artist}).sort({createdAt: -1});
+        console.log(artProjects);
         res.status(200).json(artProjects);
         return;
     }
@@ -46,4 +54,4 @@ const createArt = async (req, res) => {
     }
 }
 
-module.exports = { createArt, getArtProjects };
+module.exports = { createArt, getArtProjects, getAllProjects };

@@ -2,6 +2,7 @@ import { useNavigate, useParams, useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import Modal from "./Modal";
+import Header from "./Header";
 
 const Category = () => {
 
@@ -67,11 +68,6 @@ const Category = () => {
         getAllArt();
     }, [id]);
 
-    function handleArtClicked(event, project) {
-        console.log(event.currentTarget);
-        console.log(project);
-    }
-
     const Card = ({ item }) => {
         return (
             <motion.div layoutId={`card-${item._id}`} className="categoryCard" onClick={() => setSelected(item)}>
@@ -85,11 +81,7 @@ const Category = () => {
 
     return (
         <div className="notebookContainer">
-            <div className="header">
-                <div className="nameTitle">
-                    <img src={require(`../images/${getName}Title.png`)} alt="Name title"/>
-                </div>
-            </div>
+            <Header name={getName}/>
             <div className="content">
                 <div className="leftPanel">
                     <div className="panelHomePostIt" onClick={() => {navigate("/")}}>

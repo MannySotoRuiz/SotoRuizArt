@@ -108,7 +108,7 @@ body {
 
 .leftPanel {
   width: 20%;
-  height: 830px;
+  min-height: 830px;
   /* outline: 3px solid purple; */
   padding-top: 1%;
   padding-left: 4.5%;
@@ -120,7 +120,7 @@ body {
 
 .rightPanel {
   width: 80%;
-  height: 830px;
+  min-height: 830px;
   /* outline: 3px solid orangered; */
 }
 
@@ -253,6 +253,12 @@ body {
   margin-left: 28%;
 }
 
+.artGalleryTitleImg {
+  width: 40%;
+  height: 45%;
+  margin-left: 17%;
+}
+
 .subjectContent {
   /* outline: 2px solid black; */
   width: 100%;
@@ -270,7 +276,7 @@ body {
   left: 0px;
   background-color: rgba(0,0,0,0.5);
   /* opacity: 50%; */
-  z-index: 50;
+  /* z-index: 50; */
   cursor: pointer;
   overflow-y: scroll;
 }

@@ -1,4 +1,6 @@
 import { useNavigate, useParams, useLocation } from "react-router-dom";
+import Header from "./Header";
+import LeftPanel from "./LeftPanel";
 
 const Years = () => {
     const  { id } = useParams();
@@ -32,22 +34,16 @@ const Years = () => {
         navigate(`${location.pathname}/${getYear}/menu`);
     }
 
+    const leftPanelList = [
+        {class: "panelHomePostIt", imageURL: "../images/Home.png", alt: "Home", style: {width: "75%", height: "65%"}, navigate: "/"},
+        {class: "panelViewAllPostIt", imageURL: "../images/viewAll.png", alt: "Gallery", style: {width: "85%", height: "55%"}, navigate: `/${id}/gallery`}
+    ];
+
     return (
         <div className="notebookContainer">
-            <div className="header">
-                <div className="nameTitle">
-                    <img src={require(`../images/${id}Title.png`)} alt="Doodles fonts" />
-                </div>
-            </div>
+            <Header name={id}/>
             <div className="content">
-                <div className="leftPanel">
-                    <div className="panelPostIt panelHomePostIt">
-                        <img style={{width: "75%", height: "65%"}} src={require("../images/Home.png")} alt="Home" onClick={() => {navigate("/")}}/>
-                    </div>
-                    <div className="panelPostIt panelViewAllPostIt">
-                        <img style={{width: "85%", height: "55%"}} src={require("../images/viewAll.png")} alt="View All" onClick={() => {navigate("/")}}/>
-                    </div>
-                </div>
+                <LeftPanel list={ leftPanelList } />
                 <div className="rightPanel">
                     <div className="subjectTitle">
                         <img className="yearsTitleImg" src={require("../images/Years.png")} alt="Years"/>

@@ -1,4 +1,6 @@
 import { useNavigate, useParams, useLocation } from "react-router-dom";
+import Header from "./Header";
+import LeftPanel from "./LeftPanel";
 
 const Menu = () => {
     const { id } = useParams();
@@ -17,13 +19,15 @@ const Menu = () => {
         navigate(`/${getName}/years/${id}/${category}`);
     }
 
+    const leftPanelList = [
+        {class: "panelHomePostIt", imageURL: "../images/Home.png", alt: "Home", style: {width: "75%", height: "65%"}, navigate: "/"},
+        {class: "panelYearsPostIt", imageURL: "../images/yearsPanel.png", alt: "Years", style: {width: "75%", height: "65%"}, navigate: `/${getName}/years`},
+        {class: "panelViewAllPostIt", imageURL: "../images/viewAll.png", alt: "Gallery", style: {width: "75%", height: "65%"}, navigate: `/${getName}/gallery`}
+    ];
+
     return (
         <div className="notebookContainer">
-            <div className="header">
-                <div className="nameTitle">
-                    <img src={require(`../images/${getName}Title.png`)} alt="Name title"/>
-                </div>
-            </div>
+            <Header name={getName}/>
             <div className="content">
                 <div className="leftPanel">
                     <div className="panelHomePostIt">
@@ -32,10 +36,11 @@ const Menu = () => {
                     <div className="panelYearsPostIt">
                         <img style={{width: "75%", height: "65%"}} src={require("../images/yearsPanel.png")} alt="Home" onClick={handleYearsPanelClick}/>
                     </div>
-                    <div className="panelPostIt panelViewAllPostIt">
+                    <div className="panelViewAllPostIt">
                         <img style={{width: "85%", height: "55%"}} src={require("../images/viewAll.png")} alt="View All" onClick={() => {navigate("/")}}/>
                     </div>
                 </div>
+                {/* <LeftPanel list={ leftPanelList } /> */}
 
                 <div className="rightPanel">
                     <div style={{ paddingRight: "25%" }} className="subjectTitle">
