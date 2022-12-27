@@ -3,7 +3,7 @@ const Art = require("../models/ArtModel");
 
 // get art projects
 const getArtProjects = async(req, res) => {
-    const { artist, category, year } = req.body;
+    const { artist, category, year } = req.query;
     if (!year && !category) { // get all art projects from artist
         console.log("year empty");
         const artProjects = await Art.find({artist:artist}).sort({createdAt: -1});

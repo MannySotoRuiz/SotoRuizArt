@@ -1,32 +1,54 @@
 import { useNavigate, useParams, useLocation } from "react-router-dom";
+import { useGetArtProjects } from "../hooks/useGetArtProjects";
+import { useEffect, useState } from "react";
 
 const Category = () => {
+
+    const { getart, error } = useGetArtProjects();
     const { id } = useParams();
     const location = useLocation();
     const navigate = useNavigate();
     const splitPath = location.pathname.split("/");
     const getName = splitPath[1];
     const getYear = splitPath[3];
-    console.log(id);
+    const [allImages, setImages] = useState([]);
+    // const [getName, setName] = useState("");
+    // const [getYear, setYear] = useState("");
 
-    const getImage = ["sample1", "sample2", "sample3", "sample4"];
-    const allRows = Math.ceil(getImage.length / 3);
-    let imgsGroup = [];
-    let imgIndex = 0;
-    for (let i = 0; i < allRows; i++) {
-        let holdImages = [];
-        for (let j = imgIndex; j < getImage.length; j++) {
-            holdImages.push(getImage[j]);
-            imgIndex++;
-            if (holdImages.length === 3) {
-                imgsGroup.push(holdImages);
-                break;
+    useEffect(() => {
+        const getAllArt = async () => {
+            const tempName = splitPath[1];
+            const tempYear = splitPath[3];
+            let name;
+            if (tempName === "kate") {
+                name = "Kate";
+            } else {
+                name = "Emily";
             }
-            if (j === (getImage.length - 1)) {
-                imgsGroup.push(holdImages);
+            await getart(name, id, tempYear);
+            const getProjects = JSON.parse(localStorage.getItem("artProjects"));
+
+            const allRows = Math.ceil(getProjects.length / 3);
+            let imgsGroup = [];
+            let idx = 0
+            for (let i = 0; i < allRows; i++) {
+                let holdImgs = [];
+                for (let j = idx; j < getProjects.length; j++) {
+                    holdImgs.push(getProjects[j]);
+                    idx++;
+                    if (holdImgs.length === 3) {
+                        imgsGroup.push(holdImgs);
+                        break;
+                    }
+                    if (j === (getProjects.length - 1)) {
+                        imgsGroup.push(holdImgs);
+                    }
+                }
             }
-        }
-    }
+            setImages(imgsGroup);
+        };
+        getAllArt();
+    }, [id]);
 
     return (
         <div className="notebookContainer">
@@ -62,7 +84,8 @@ const Category = () => {
                         <img className={`${id}TitleImg`} src={require(`../images/${id}Title.png`)} alt="Catgory Title" />
                     </div>
                     <div style={{ paddingTop: "0%", paddingLeft: "4%" }} className="subjectContent">
-                        {imgsGroup.map((row, idx) => {
+                        {error && <div className="error">{error}</div>}
+                        {allImages.map((row, idx) => {
                             return (
                                 <div className="categoryRow" key={idx}>
                                     {row.map((img, i) => {
