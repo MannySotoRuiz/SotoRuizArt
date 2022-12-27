@@ -1,13 +1,15 @@
 import React from "react";
+import { motion } from "framer-motion";
 
 function GalleryCard(props) {
+    console.log(props);
     return (
-        <div className="galleryCard" style={{
+        <motion.div onClick={() => props.setSelected(props.artProject)} layoutId={`card-${props.artProject._id}`} className="galleryCard" style={{
             ...styles.card,
             ...styles[props.size]
         }}>
-            <img style={{ borderRadius: '16px', width: "100%", height: "100%", objectFit: "cover"}} src={props.imgURL} alt="art project"/>
-        </div>
+            <img style={{ borderRadius: '16px', width: "100%", height: "100%", objectFit: "cover"}} src={props.artProject.artImage} alt="art project"/>
+        </motion.div>
     )
 }
 

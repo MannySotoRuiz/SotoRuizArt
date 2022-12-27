@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import Header from "./Header";
 import LeftPanel from "./LeftPanel";
 import GalleryCard from "./GalleryCard";
+import Modal from "./Modal";
 
 const Gallery = () => {
     const { id } = useParams(); // get the artist name picked from user
@@ -15,7 +16,7 @@ const Gallery = () => {
     const [allImages, setImages] = useState([]);    // used to store all the art projects that need to be displayed
     const [fetchError, setError] = useState(null);  // used if error when fetching from backend
     const [imgSizes, setImgSizes] = useState([]);
-    // const [selected, setSelected] = useState(null);
+    const [selected, setSelected] = useState(null);
 
     useEffect(() => {
         const getAllArt = async () => {
@@ -58,36 +59,6 @@ const Gallery = () => {
         }
         getAllArt();
     }, [id]);
-
-    // const sty = {
-    //     // pin_container: {
-    //     //     margin: 0,
-    //     //     padding: 0,
-    //     //     width: "80%",
-    //     //     display: "grid",
-    //     //     gridTemplateColumns: "repeat(auto-fill, 250px)",
-    //     //     gridAutoRows: "10px",
-    //     //     // position: "absolute",
-    //     //     // left: "50%",
-    //     //     transform: "translateX(-50%)",
-    //     //     justifyContent: "center",
-    //     //     backgroundColor: "black",
-    //     //     color: "white"
-    //     // }
-    //     pin_container: {
-    //         margin: 0,
-    //         padding: 0,
-    //         width: "80%",
-    //         height: "100%",
-    //         display: "grid",
-    //         gridTemplateColumns: "repeat(auto-fill, 250px)",
-    //         gridAutoRows: "10px",
-    //         // transform: "translateX(-50%)",
-    //         justifyContent: "center",
-    //         // backgroundColor: "black",
-    //         color: "white"
-    //     }
-    // }
     
     return (
         <div className="notebookContainer">
@@ -103,12 +74,13 @@ const Gallery = () => {
                         <div className="galleryBackground">
                             {allImages.map((art, idx) => {
                                 return(
-                                    <GalleryCard key={idx} size={imgSizes[idx]} imgURL={art.artImage}/>
+                                    <GalleryCard selected={selected} setSelected={setSelected} key={idx} size={imgSizes[idx]} artProject={art}/>
                                 )
                             })}
                         </div>
                     </div>
                 </div>
+                <Modal selected={selected} setSelected={setSelected} />
             </div>
         </div>
     );

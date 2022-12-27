@@ -123,7 +123,6 @@ const Category = () => {
                         })}
                     </div>
                 </div>
-                {/* <Modal></Modal> */}
                 <Modal selected={selected} setSelected={setSelected} />
             </div>
         </div>
