@@ -1,5 +1,7 @@
 import { useNavigate, useParams, useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { motion } from "framer-motion";
+import Modal from "./Modal";
 
 const Category = () => {
 
@@ -13,6 +15,7 @@ const Category = () => {
     localStorage.setItem("year", JSON.stringify(splitPath[3])); // store year in localstorage
     const [allImages, setImages] = useState([]);    // used to store all the art projects that need to be displayed
     const [fetchError, setError] = useState(null);  // used if error when fetching from backend
+    const [selected, setSelected] = useState(null);
 
     useEffect(() => {
         const getAllArt = async () => {
@@ -69,6 +72,17 @@ const Category = () => {
         console.log(project);
     }
 
+    const Card = ({ item }) => {
+        return (
+            <motion.div layoutId={`card-${item._id}`} className="categoryCard" onClick={() => setSelected(item)}>
+                <div className="categoryCardImg">
+                    <img src={item.artImage} alt={item.title}/>
+                </div>
+                <div className="categoryCardText"><p>{item.title}</p></div>
+            </motion.div>
+        );
+    }
+
     return (
         <div className="notebookContainer">
             <div className="header">
@@ -107,14 +121,9 @@ const Category = () => {
                         {allImages.map((row, idx) => {
                             return (
                                 <div className="categoryRow" key={idx}>
-                                    {row.map((project, i) => {
+                                    {row.map((project) => {
                                         return (
-                                            <div className="categoryCard" key={i} onClick={(e) => handleArtClicked(e, project)}>
-                                                <div className="categoryCardImg">
-                                                    <img src={project.artImage} alt={project.title}/>
-                                                </div>
-                                                <div className="categoryCardText"><p>{project.title}</p></div>
-                                            </div>
+                                            <Card key={project._id} item={project} />
                                         )
                                     })}
                                 </div>
@@ -122,6 +131,8 @@ const Category = () => {
                         })}
                     </div>
                 </div>
+                {/* <Modal></Modal> */}
+                <Modal selected={selected} setSelected={setSelected} />
             </div>
         </div>
     );
