@@ -11,12 +11,14 @@ body {
 :root {
   --color-background: #ffffff;
   --color-vertical-line: #af5f5f;
-  --color-horizontal-line: blue;
+  --color-horizontal-line: #81C6E8;
   --color-postit-purple: #CE60F5;
   --color-postit-yellow: #FAFF15;
   --color-postit-win: #53D085;
   --color-postit-lose: #E45353;
   --color-postit-tie: #7995FA;
+  --color-postit-pink: #FEA1BF;
+  --color-positit-lines: black;
 }
 
 #home {
@@ -166,7 +168,7 @@ body {
 .galleryPostIt {
   width: 70%;
   height: 120px;
-  background-color: var(--color-postit-win);
+  background-color: var(--color-postit-pink);
   box-shadow: 0px 6px 8px rgba(33, 33, 33, .7);
   transform: rotate(-1deg);
   display: flex;
@@ -331,6 +333,8 @@ body {
   /* z-index: 50; */
   cursor: pointer;
   overflow-y: scroll;
+  display: flex;
+  /* justify-content: center; */
 }
 
 .innerModalDiv {
@@ -338,17 +342,46 @@ body {
   max-width: 700px;
   margin-left: auto;
   margin-right: auto;
-  margin-top: 2rem;
-  margin-bottom: 2rem;
+  margin-top: auto;
+  margin-bottom: auto;
   padding-left: 2rem; /* 32px */
   padding-right: 2rem; /* 32px */
   cursor: default;
   /* outline: 3px solid blue; */
 }
 
-.modalImg {
-  /* outline: 3px solid red; */
+.modalLeftClick {
+  /* outline: 2px solid red; */
+  width: 80px;
+  height: 80px;
+  top: 50%;
+  left: 2%;
+  position: absolute;
+  background-color: white;
+  border-radius: 50%;
 }
+.modalLeftClick img {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+}
+
+.modalRightClick {
+  /* outline: 2px solid red; */
+  width: 80px;
+  height: 80px;
+  top: 50%;
+  right: 2%;
+  position: absolute;
+  background-color: white;
+  border-radius: 50%;
+}
+.modalRightClick img {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+}
+
 .modalImg img {
   width: 100%;
   height: 100%;
@@ -370,4 +403,8 @@ body {
 .modalTextDiv p {
   margin-top: 1rem; /* 16px */
   margin-top: 1rem; /* 16px */
+}
+
+.hidden {
+  display: none;
 }

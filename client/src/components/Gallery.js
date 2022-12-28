@@ -75,13 +75,18 @@ const Gallery = () => {
                         <div className="galleryBackground">
                             {allImages.map((art, idx) => {
                                 return(
-                                    <GalleryCard selected={selected} setSelected={setSelected} key={idx} size={imgSizes[idx]} artProject={art}/>
+                                    <GalleryCard
+                                    selected={selected} 
+                                    setSelected={setSelected} 
+                                    key={idx} 
+                                    size={imgSizes[idx]} 
+                                    artProject={art} />
                                 )
                             })}
                         </div>
                     </div>
                 </div>
-                <Modal selected={selected} setSelected={setSelected} />
+                <Modal selected={selected} setSelected={setSelected} list={allImages}/>
             </div>
         </div>
     );
