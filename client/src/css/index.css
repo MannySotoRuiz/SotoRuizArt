@@ -137,6 +137,45 @@ body {
   margin-bottom: 15%;
   /* transition: transform .15s linear; */
 }
+.galleryHomePostIt {
+  width: 70%;
+  height: 120px;
+  background-color: var(--color-postit-yellow);
+  box-shadow: 0px 6px 8px rgba(33, 33, 33, .7);
+  transform: rotate(-1deg);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  margin-bottom: 15%;
+  /* transition: transform .15s linear; */
+}
+.galleryMenuPostIt {
+  width: 70%;
+  height: 120px;
+  background-color: var(--color-postit-tie);
+  box-shadow: 0px 6px 8px rgba(33, 33, 33, .7);
+  transform: rotate(-1deg);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  margin-bottom: 15%;
+  /* transition: transform .15s linear; */
+}
+.galleryPostIt {
+  width: 70%;
+  height: 120px;
+  background-color: var(--color-postit-win);
+  box-shadow: 0px 6px 8px rgba(33, 33, 33, .7);
+  transform: rotate(-1deg);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  margin-bottom: 15%;
+  /* transition: transform .15s linear; */
+}
 
 .panelViewAllPostIt {
   width: 200px;
@@ -167,22 +206,8 @@ body {
 }
 
 .panelDrawingsPostIt {
-  width: 200px;
-  height: 15%;
-  background-color: var(--color-postit-tie);
-  box-shadow: 0px 6px 8px rgba(33, 33, 33, .7);
-  transform: rotate(-1deg);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
-  margin-bottom: 15%;
-  /* transition: transform .15s linear; */
-}
-
-.panelPaintingsPostIt {
-  width: 200px;
-  height: 15%;
+  width: 70%;
+  height: 120px;
   background-color: var(--color-postit-win);
   box-shadow: 0px 6px 8px rgba(33, 33, 33, .7);
   transform: rotate(-1deg);
@@ -194,10 +219,37 @@ body {
   /* transition: transform .15s linear; */
 }
 
-.panelCraftsPostIt {
-  width: 200px;
-  height: 15%;
+.panelPaintingsPostIt {
+  width: 70%;
+  height: 120px;
   background-color: var(--color-postit-lose);
+  box-shadow: 0px 6px 8px rgba(33, 33, 33, .7);
+  transform: rotate(-1deg);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  margin-bottom: 15%;
+  /* transition: transform .15s linear; */
+}
+
+.panelCraftsPostIt {
+  width: 70%;
+  height: 120px;
+  background-color: var(--color-postit-purple);
+  box-shadow: 0px 6px 8px rgba(33, 33, 33, .7);
+  transform: rotate(-1deg);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  margin-bottom: 15%;
+  /* transition: transform .15s linear; */
+}
+.panelSculpturesPostIt {
+  width: 70%;
+  height: 120px;
+  background-color: var(--color-postit-yellow);
   box-shadow: 0px 6px 8px rgba(33, 33, 33, .7);
   transform: rotate(-1deg);
   display: flex;

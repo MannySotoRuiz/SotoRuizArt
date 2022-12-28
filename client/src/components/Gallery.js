@@ -9,8 +9,9 @@ const Gallery = () => {
     const { id } = useParams(); // get the artist name picked from user
 
     const leftPanelList = [
-        {class: "panelHomePostIt", imageURL: "../images/Home.png", alt: "Home", style: {width: "75%", height: "65%"}, navigate: "/"},
-        {class: "panelViewAllPostIt", imageURL: "../images/menuTitle.png", alt: "Gallery", style: {width: "85%", height: "55%"}, navigate: `/${id}/gallery`}
+        {class: "galleryHomePostIt", imageURL: "../images/Home.png", alt: "Home", style: {width: "75%", height: "65%"}, navigate: "/"},
+        {class: "galleryMenuPostIt", imageURL: "../images/menuTitle.png", alt: "Gallery", style: {width: "85%", height: "55%"}, navigate: `/${id}/menu`},
+        {class: "galleryPostIt", imageURL: "../images/gallery.png", alt: "Gallery", style: {width: "85%", height: "70%"}, navigate: `/${id}/gallery`}
     ];
 
     const [allImages, setImages] = useState([]);    // used to store all the art projects that need to be displayed

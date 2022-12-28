@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import Modal from "./Modal";
 import Header from "./Header";
-// import LeftPanel from "./LeftPanel";
+import LeftPanel from "./LeftPanel";
 
 const Category = () => {
 
@@ -79,35 +79,21 @@ const Category = () => {
         );
     }
 
-    // const leftPanelList = [
-    //     {class: "panelHomePostIt", imageURL: "../images/Home.png", alt: "Home", style: {width: "75%", height: "65%"}, navigate: "/"},
-    //     {class: "panelViewAllPostIt", imageURL: "../images/viewAll.png", alt: "Gallery", style: {width: "75%", height: "65%"}, navigate: `/${getName}/gallery`}
-    // ];
+    const leftPanelList = [
+        {class: "galleryHomePostIt", imageURL: "../images/Home.png", alt: "Home", style: {width: "75%", height: "65%"}, navigate: "/"},
+        {class: "galleryMenuPostIt", imageURL: "../images/menuTitle.png", alt: "menu", style: {width: "75%", height: "60%"}, navigate: `/${getName}/menu`},
+        {class: "panelDrawingsPostIt", imageURL: "../images/drawings.png", alt: "drawings", style: {width: "85%", height: "75%"}, navigate: `/${getName}/drawings`},
+        {class: "panelPaintingsPostIt", imageURL: "../images/paintings.png", alt: "paintings", style: {width: "85%", height: "65%"}, navigate: `/${getName}/paintings`},
+        {class: "panelCraftsPostIt", imageURL: "../images/crafts.png", alt: "crafts", style: {width: "75%", height: "65%"}, navigate: `/${getName}/crafts`},
+        {class: "panelSculpturesPostIt", imageURL: "../images/sculptures.png", alt: "sculptures", style: {width: "87%", height: "77%"}, navigate: `/${getName}/sculptures`},
+        {class: "galleryPostIt", imageURL: "../images/gallery.png", alt: "gallery", style: {width: "85%", height: "70%"}, navigate: `/${getName}/gallery`}
+    ];
 
     return (
         <div className="notebookContainer">
             <Header name={getName}/>
             <div className="content">
-                <div className="leftPanel">
-                    <div className="panelHomePostIt" onClick={() => {navigate("/")}}>
-                        <img style={{width: "75%", height: "65%"}} src={require("../images/Home.png")} alt="Home"/>
-                    </div>
-                    <div className="panelYearsPostIt" onClick={() => {navigate(`/${getName}/menu`)}}>
-                        <img style={{width: "75%", height: "60%"}} src={require("../images/menuTitle.png")} alt="Years"/>
-                    </div>
-                    <div className="panelDrawingsPostIt" onClick={() => {navigate(`/${getName}/drawings`)}}>
-                        <img style={{width: "85%", height: "75%"}} src={require("../images/drawings.png")} alt="Drawings"/>
-                    </div>
-                    <div className="panelPaintingsPostIt" onClick={() => {navigate(`/${getName}/paintings`)}}>
-                        <img style={{width: "85%", height: "65%"}} src={require("../images/paintings.png")} alt="Paintings"/>
-                    </div>
-                    <div className="panelCraftsPostIt" onClick={() => {navigate(`/${getName}/crafts`)}}>
-                        <img style={{width: "75%", height: "65%"}} src={require("../images/crafts.png")} alt="Crafts"/>
-                    </div>
-                    <div className="panelYearsPostIt" onClick={() => {navigate(`/${getName}/sculptures`)}}>
-                        <img style={{width: "87%", height: "77%"}} src={require("../images/sculptures.png")} alt="Sculptures"/>
-                    </div>
-                </div>
+                <LeftPanel list={ leftPanelList } />
 
                 <div className="rightPanel">
                     <div style={{ paddingRight: "25%" }} className="subjectTitle">
