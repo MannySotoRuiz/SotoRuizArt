@@ -1,6 +1,6 @@
 const express = require("express");
 
-const { createArt, getArtProjects, getAllProjects, getArtistCategory } = require("../controllers/artController");
+const { createArt, getArtProjects, getAllProjects, getArtistCategory, updateLikeCount } = require("../controllers/artController");
 
 const router = express.Router();
 
@@ -16,8 +16,8 @@ router.get("/getart", getArtProjects);
 // create art route
 router.post("/createart", createArt);
 
-// update art route
-// router.post("/updateart", updateArt);
+// update like count
+router.post("/updatelike", updateLikeCount);
 
 // delete art route
 

@@ -62,4 +62,16 @@ const createArt = async (req, res) => {
     }
 }
 
-module.exports = { createArt, getArtProjects, getAllProjects, getArtistCategory };
+const updateLikeCount = async (req, res) => {
+    const { id, count } = req.body;
+    
+    try {
+        const art = await Art.updatecount(email, location);
+
+        res.status(200).json({id, count});
+    } catch (error) {
+        res.status(400).json({error: error.message});
+    }
+}
+
+module.exports = { createArt, getArtProjects, getAllProjects, getArtistCategory, updateLikeCount };

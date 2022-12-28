@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const { json } = require("express"); 
 
 const Schema = mongoose.Schema;
 
@@ -23,7 +24,26 @@ const artSchema = new Schema({
         type: String,
         default: "Art project description"
     },
+    likecount: {
+        type: Number,
+        default: 0
+    },
     artImage: { type: String }
 }, { timestamps: true });
+
+artSchema.statics.updatecount = async function(id, count) {
+    // validation
+    if (!id || !count) {
+        throw Error("Missing id or body");
+    }
+
+    this.updateOne({_id, id}, {$set: { likecount:count }}, (err, doc) => {
+        if (err) {
+            throw Error("Error trying to update like count");
+        }
+
+        return json(doc);
+    })
+}
 
 module.exports = mongoose.model("Art", artSchema);

@@ -1,4 +1,4 @@
-import { useNavigate, useParams, useLocation } from "react-router-dom";
+import { useParams, useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import Modal from "./Modal";
@@ -7,7 +7,6 @@ import LeftPanel from "./LeftPanel";
 
 const Category = () => {
 
-    const navigate = useNavigate();
     const { id } = useParams(); // get the category picked from user
     console.log(id);
     const location = useLocation();
@@ -114,7 +113,7 @@ const Category = () => {
                         })}
                     </div>
                 </div>
-                <Modal selected={selected} setSelected={setSelected} />
+                <Modal selected={selected} setSelected={setSelected} list={allImages} />
             </div>
         </div>
     );
