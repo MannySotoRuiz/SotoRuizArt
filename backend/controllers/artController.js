@@ -1,6 +1,14 @@
 const mongoose = require("mongoose");
 const Art = require("../models/ArtModel");
 
+// get one project
+const getOneProject = async(req, res) => {
+    const id = req.query.param1;
+    const objId = mongoose.Types.ObjectId(id);
+    const project = await Art.find({ _id: objId });
+    res.status(200).json(project);
+}
+
 // get all projects from artist
 const getAllProjects = async(req, res) => {
     const artist = req.query.param1;
@@ -81,4 +89,4 @@ const updateLikeCount = async (req, res) => {
     }
 }
 
-module.exports = { createArt, getArtProjects, getAllProjects, getArtistCategory, updateLikeCount };
+module.exports = { createArt, getArtProjects, getAllProjects, getArtistCategory, updateLikeCount, getOneProject };
