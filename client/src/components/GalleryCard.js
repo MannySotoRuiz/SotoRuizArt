@@ -1,32 +1,37 @@
 import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { useUpdateLikeCount } from "../hooks/useUpdateLikeCount";
+import { useGetOneProject } from "../hooks/useGetOneProject";
 
 function GalleryCard(props) {
 
     const { updateLikeCount, error } = useUpdateLikeCount();
-
+    const { getOneProject, error: oneProjectError } = useGetOneProject();
     const [artIndex, setIndex] = useState(null);
 
-    const hanldeMouseOver = (event) => {
+    const hanldeMouseOver = async (event) => {
         const getAll = document.querySelectorAll(".galleryCard");
+        let idx;
+        let ifFound = false;
         for (let i = 0; i < getAll.length; i++) {
             if (getAll[i] !== event.currentTarget) {
                 getAll[i].style.opacity = "60%";
             } else {  // display heart icon
+                ifFound = true;
+                idx = i;
                 setIndex(i);
-                getAll[i].children[1].classList.remove("hidden");
-                const check = JSON.parse(localStorage.getItem(`img-likecount-${props.artProject._id}`));
-                if (check) {
-                    getAll[i].children[1].children[1].innerText = check;
-                } else {
-                    if (props.artProject.likecount === 0.5) {
-                        getAll[i].children[1].children[1].innerText = 0;
-                    } else {
-                        getAll[i].children[1].children[1].innerText = props.artProject.likecount;
-                    }
-                }
+                getAll[idx].children[1].classList.remove("hidden");
             }
+        }
+        if (ifFound) {
+            await getOneProject(props.artProject._id);
+            if (oneProjectError) {
+                alert(oneProjectError);
+                console.log(oneProjectError);
+            }
+            const getFetch = JSON.parse(localStorage.getItem(`fetchedProject`)); // get the current like count
+            const currentFetchedCount = getFetch[0].likecount;
+            getAll[idx].children[1].children[1].innerText = currentFetchedCount;
         }
     }
 
@@ -41,9 +46,15 @@ function GalleryCard(props) {
 
     async function handleHeartClick(e, project) {
         e.stopPropagation(); // this is to prevent the popup from opening
-
-        let currentCount = props.artProject.likecount; // get the current like count
         const divHeart = e.currentTarget;
+
+        // await getOneProject(props.artProject._id);
+        // if (oneProjectError) {
+        //     alert(oneProjectError);
+        //     console.log(oneProjectError);
+        // }
+
+        let currentCount = JSON.parse(localStorage.getItem(`img-likecount-${props.artProject._id}`)); // get the current like count
 
         if (divHeart.classList.contains("likedIt")) { // for removing like
             let current = JSON.parse(localStorage.getItem(`img-likecount-${props.artProject._id}`));

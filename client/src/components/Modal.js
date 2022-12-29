@@ -5,7 +5,7 @@ import { useUpdateLikeCount } from "../hooks/useUpdateLikeCount";
 export default function Modal({ selected, setSelected, list }) {
     const [artIndex, setIndex] = useState(null);
     const { updateLikeCount, error } = useUpdateLikeCount();
-    // console.log(list);
+
     useEffect(() => {
         // this code is to see whether the img should not have a left click or right click option
         if (selected) {
@@ -29,29 +29,48 @@ export default function Modal({ selected, setSelected, list }) {
         }
 
         // this function is to see when the popup opens, check if the user has already like the img
-        const setLikedImages = () => { // when the popup opens, check if user already liked the image
+        const setLikedImages = async () => { // when the popup opens, check if user already liked the image
             if (selected) {
                 const ifLiked = JSON.parse(localStorage.getItem(`img-liked-${selected._id}`));
-                const likeCount = JSON.parse(localStorage.getItem(`img-likecount-${selected._id}`));
+
                 if (ifLiked) { // previously liked this image
                     document.querySelectorAll(".heart-like-button")[0].classList.add("liked");
+                    const getIt = await getSingleProject();
+                    const likeCount = getIt[0].likecount;
                     document.querySelectorAll(".likeCount")[0].innerText = likeCount;
 
                 } else { // did not like this image previously
                     document.querySelectorAll(".heart-like-button")[0].classList.remove("liked");
-                    if (likeCount) {
-                        document.querySelectorAll(".likeCount")[0].innerText = likeCount;
-                    } else {
-                        if (selected.likecount === 0.5) {
-                            document.querySelectorAll(".likeCount")[0].innerText = 0;
-                        } else {
-                            document.querySelectorAll(".likeCount")[0].innerText = selected.likecount;
-                        }
-                    }
+                    const getIt = await getSingleProject();
+                    console.log(getIt[0]);
+                    const likeCount = getIt[0].likecount;
+                    document.querySelectorAll(".likeCount")[0].innerText = likeCount;
                 }
                 
             }
         }
+
+        const getSingleProject = async () => {
+            if (selected) {
+
+                const params = { param1: selected._id };
+                const response = await fetch(`/api/arts/getone?${new URLSearchParams(params)}`);
+                const json = await response.json();
+
+                if (response.ok) {
+                    if (json[0].likecount === 0.5) {
+                        json[0].likecount = 0;
+                    }
+                    // console.log("successfully got single project", selected._id);
+                    
+                } else {
+                    // console.log("error getting single project");
+                    alert(json.error);
+                }
+                return json;
+            }
+        }
+
         findIndex();
         setLikedImages();
     }, [selected, list]);
