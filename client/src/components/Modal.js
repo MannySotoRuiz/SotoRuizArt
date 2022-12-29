@@ -5,7 +5,7 @@ import { useUpdateLikeCount } from "../hooks/useUpdateLikeCount";
 export default function Modal({ selected, setSelected, list }) {
     const [artIndex, setIndex] = useState(null);
     const { updateLikeCount, error } = useUpdateLikeCount();
-
+    // console.log(list);
     useEffect(() => {
         // this code is to see whether the img should not have a left click or right click option
         if (selected) {
@@ -95,7 +95,6 @@ export default function Modal({ selected, setSelected, list }) {
     const handleRightClick = (e) => {
         e.stopPropagation();
         if (artIndex === 0) {
-            console.log(document.querySelectorAll(".modalLeftClick"))
             document.querySelectorAll(".modalLeftClick")[0].classList.remove("hidden");
         }
 

@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Header from "./Header";
 import LeftPanel from "./LeftPanel";
 import GalleryCard from "./GalleryCard";
@@ -58,7 +58,19 @@ const Gallery = () => {
                 setError(json.error);
             }
         }
+
+        // const checkIfLiked = () => {
+        //     for (let i = 0; i < allImages.length; i++) {
+        //         const getData = JSON.parse(localStorage.getItem(`img-liked-${allImages[i]._id}`));
+        //         // console.log(getData);
+        //         if (getData) {
+        //             // console.log(document.querySelectorAll(".card-heart")[i]);
+        //             document.querySelectorAll(".card-heart")[i].classList.add("likedIt");
+        //         }
+        //     }
+        // }
         getAllArt();
+        // checkIfLiked();
     }, [id]);
     
     return (
@@ -80,7 +92,8 @@ const Gallery = () => {
                                     setSelected={setSelected} 
                                     key={idx} 
                                     size={imgSizes[idx]} 
-                                    artProject={art} />
+                                    artProject={art}
+                                    all={allImages} />
                                 )
                             })}
                         </div>

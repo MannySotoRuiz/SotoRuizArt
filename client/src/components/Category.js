@@ -15,6 +15,7 @@ const Category = () => {
     const [allImages, setImages] = useState([]);    // used to store all the art projects that need to be displayed
     const [fetchError, setError] = useState(null);  // used if error when fetching from backend
     const [selected, setSelected] = useState(null);
+    const [allProjects, setProjects] = useState([]);
 
     useEffect(() => {
         const getAllArt = async () => {
@@ -26,7 +27,8 @@ const Category = () => {
                 name = "Emily";
             }
             const getProjects = await fetchImages(name, id);
-
+            console.log(getProjects);
+            setProjects(getProjects);
             const allRows = Math.ceil(getProjects.length / 3);
             let imgsGroup = [];
             let idx = 0
@@ -111,7 +113,7 @@ const Category = () => {
                         })}
                     </div>
                 </div>
-                <Modal selected={selected} setSelected={setSelected} list={allImages} />
+                <Modal selected={selected} setSelected={setSelected} list={allProjects} />
             </div>
         </div>
     );

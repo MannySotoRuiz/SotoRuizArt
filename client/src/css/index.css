@@ -420,6 +420,61 @@ body {
   font-size: xx-large;
 }
 
+.card-heart {
+  position: absolute;
+  width: 20%;
+  height: 40px;
+  /* outline: 2px solid red; */
+  bottom: 2%;
+  left: 3%;
+  z-index: 50;
+}
+.card-heart:before {
+  position: absolute;
+  left: 20px;
+  bottom: 0%;
+  transform: rotate(-45deg);
+  transform-origin: 0 100%;
+  width: 20px;
+  height: 35px;
+  border-radius: 40px 40px 0 0;
+  background-color: #B2B2B2;
+  content: "";
+  cursor: pointer;
+  transition: background .4s;
+}
+.card-heart:after {
+  position: absolute;
+  bottom: 0%;
+  transform: rotate(45deg);
+  transform-origin :100% 100%;
+  width: 20px;
+  height: 35px;
+  border-radius: 40px 40px 0 0;
+  background-color: #B2B2B2;
+  content: "";
+  cursor: pointer;
+  transition: background .4s;
+}
+.card-heart.likedIt::before,
+.card-heart.likedIt::after {
+  background-color: #d65076;
+}
+.card-heart.likedIt {
+  animation: liked .4s ease;
+}
+@keyframes likedIt {
+  0% {
+    transform: scale(.8);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
 .heart-like-button {
   position: relative;
   width: 40px;
