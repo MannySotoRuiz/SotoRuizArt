@@ -4,7 +4,7 @@ const Art = require("../models/ArtModel");
 // get all projects from artist
 const getAllProjects = async(req, res) => {
     const artist = req.query.param1;
-    const artProjects = await Art.find({artist:artist}).sort({createdAt: -1});
+    const artProjects = await Art.find({artist:artist}).sort({ year: -1, createdAt: -1});
     res.status(200).json(artProjects);
 }
 
