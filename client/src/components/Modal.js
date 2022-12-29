@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
+import { useUpdateLikeCount } from "../hooks/useUpdateLikeCount";
 
 export default function Modal({ selected, setSelected, list }) {
     const [artIndex, setIndex] = useState(null);
+    const { updateLikeCount, error } = useUpdateLikeCount();
 
     useEffect(() => {
+        // this code is to see whether the img should not have a left click or right click option
         if (selected) {
             if (selected === list[0]) {
                 document.querySelectorAll(".modalLeftClick")[0].classList.add("hidden");
@@ -13,6 +16,9 @@ export default function Modal({ selected, setSelected, list }) {
                 document.querySelectorAll(".modalRightClick")[0].classList.add("hidden");
             }
         }
+
+        // this is the code to find the index of the current selected img
+        // this index is then used for the sliding to the next img (right or left)
         const findIndex = () => {
             for (let i = 0; i < list.length; i++) {
                 if (selected === list[i]) {
@@ -21,6 +27,8 @@ export default function Modal({ selected, setSelected, list }) {
                 }
             }
         }
+
+        // this function is to see when the popup opens, check if the user has already like the img
         const setLikedImages = () => { // when the popup opens, check if user already liked the image
             if (selected) {
                 const ifLiked = JSON.parse(localStorage.getItem(`img-liked-${selected._id}`));
@@ -28,6 +36,12 @@ export default function Modal({ selected, setSelected, list }) {
                     document.querySelectorAll(".heart-like-button")[0].classList.add("liked");
                 } else { // did not like this image previously
                     document.querySelectorAll(".heart-like-button")[0].classList.remove("liked");
+                }
+                
+                if (selected.likecount === 0.5) {
+                    document.querySelectorAll(".likeCount")[0].innerText = 0;
+                } else {
+                    document.querySelectorAll(".likeCount")[0].innerText = selected.likecount;
                 }
             }
         }
@@ -41,26 +55,32 @@ export default function Modal({ selected, setSelected, list }) {
 
     // function for when the user clicks on the heart
     // either performing liked or disliked
-    function handleHeartLiked (e, id) {
+    async function handleHeartLiked (e, id) {
         const strCount = document.querySelectorAll(".likeCount")[0].innerText; // get the liked number count
         let numberCount = Number(strCount);
 
         if (e.currentTarget.classList.contains("liked")) {  // was already liked so remove like
             numberCount--;
-            document.querySelectorAll(".likeCount")[0].innerText = numberCount;
-            e.currentTarget.classList.remove("liked");
-            localStorage.setItem(`img-liked-${id}`, JSON.stringify(false));
+            const store = e.currentTarget;
+            await updateLikeCount(id, numberCount);
+            if (!error) {
+                selected.likecount = numberCount;
+                document.querySelectorAll(".likeCount")[0].innerText = numberCount;
+                store.classList.remove("liked");
+                localStorage.setItem(`img-liked-${id}`, JSON.stringify(false));
+            }
 
         } else {  // was not liked previously so now like it
             numberCount++;
-            document.querySelectorAll(".likeCount")[0].innerText = numberCount;
-            e.currentTarget.classList.add("liked");
-            localStorage.setItem(`img-liked-${id}`, JSON.stringify(true));
+            const store = e.currentTarget;
+            await updateLikeCount(id, numberCount);
+            if (!error) {
+                selected.likecount = numberCount;
+                document.querySelectorAll(".likeCount")[0].innerText = numberCount;
+                store.classList.add("liked");
+                localStorage.setItem(`img-liked-${id}`, JSON.stringify(true));
+            }
         }
-    }
-
-    const updateLikeCount = async () => {
-        console.log("test");
     }
 
     const handleLeftClick = (e) => {
@@ -96,6 +116,7 @@ export default function Modal({ selected, setSelected, list }) {
                         <div onClick={(e) => handleHeartLiked(e, selected._id)} className="heart-like-button"></div>
                         <h4 className="likeCount">{selected.likecount}</h4>
                     </div>
+                    {error && <p>{error}</p>}
                     <h3>{selected.title}</h3>
                     <p>{selected.description}</p>
                     <span className="tag tag-cloud-functions tag-lg">#{selected.artist}</span>

@@ -8,11 +8,9 @@ import LeftPanel from "./LeftPanel";
 const Category = () => {
 
     const { id } = useParams(); // get the category picked from user
-    console.log(id);
     const location = useLocation();
     const splitPath = location.pathname.split("/"); // get the current path that user is on
     const getName = splitPath[1]; // get name from the path
-    console.log(getName);
     localStorage.setItem("name", JSON.stringify(splitPath[1])); // store name in localstorage
     const [allImages, setImages] = useState([]);    // used to store all the art projects that need to be displayed
     const [fetchError, setError] = useState(null);  // used if error when fetching from backend

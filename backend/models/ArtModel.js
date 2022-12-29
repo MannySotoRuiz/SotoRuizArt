@@ -34,11 +34,12 @@ const artSchema = new Schema({
 artSchema.statics.updatecount = async function(id, count) {
     // validation
     if (!id || !count) {
-        throw Error("Missing id or body");
+        throw Error("Missing id or count");
     }
 
-    this.updateOne({_id, id}, {$set: { likecount:count }}, (err, doc) => {
+    this.updateOne({_id: id}, {$set: { likecount:count }}, (err, doc) => {
         if (err) {
+            console.log("Error:", id, count);
             throw Error("Error trying to update like count");
         }
 

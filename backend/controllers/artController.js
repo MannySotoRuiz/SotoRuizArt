@@ -64,12 +64,19 @@ const createArt = async (req, res) => {
 
 const updateLikeCount = async (req, res) => {
     const { id, count } = req.body;
-    
+    const objId = mongoose.Types.ObjectId(id);
+    let newCount;
+    if (count === 0) {
+        newCount = 0.5;
+    } else {
+        newCount = count;
+    }
     try {
-        const art = await Art.updatecount(email, location);
+        const art = await Art.updatecount(objId, newCount);
 
         res.status(200).json({id, count});
     } catch (error) {
+        console.log("Error:", objId, count);
         res.status(400).json({error: error.message});
     }
 }
