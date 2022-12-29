@@ -18,7 +18,7 @@ export const useUpdateLikeCount = () => {
             console.log("error updating image liked count");
             setError(json.error);
         } else {
-            console.log("successfully updated image liked count");
+            console.log("successfully updated image liked to", count);
             localStorage.setItem(`img-likecount-${id}`, JSON.stringify(count));
         }
     }

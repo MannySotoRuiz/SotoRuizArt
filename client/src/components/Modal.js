@@ -32,17 +32,24 @@ export default function Modal({ selected, setSelected, list }) {
         const setLikedImages = () => { // when the popup opens, check if user already liked the image
             if (selected) {
                 const ifLiked = JSON.parse(localStorage.getItem(`img-liked-${selected._id}`));
+                const likeCount = JSON.parse(localStorage.getItem(`img-likecount-${selected._id}`));
                 if (ifLiked) { // previously liked this image
                     document.querySelectorAll(".heart-like-button")[0].classList.add("liked");
+                    document.querySelectorAll(".likeCount")[0].innerText = likeCount;
+
                 } else { // did not like this image previously
                     document.querySelectorAll(".heart-like-button")[0].classList.remove("liked");
+                    if (likeCount) {
+                        document.querySelectorAll(".likeCount")[0].innerText = likeCount;
+                    } else {
+                        if (selected.likecount === 0.5) {
+                            document.querySelectorAll(".likeCount")[0].innerText = 0;
+                        } else {
+                            document.querySelectorAll(".likeCount")[0].innerText = selected.likecount;
+                        }
+                    }
                 }
                 
-                if (selected.likecount === 0.5) {
-                    document.querySelectorAll(".likeCount")[0].innerText = 0;
-                } else {
-                    document.querySelectorAll(".likeCount")[0].innerText = selected.likecount;
-                }
             }
         }
         findIndex();
@@ -58,7 +65,7 @@ export default function Modal({ selected, setSelected, list }) {
     async function handleHeartLiked (e, id) {
         const strCount = document.querySelectorAll(".likeCount")[0].innerText; // get the liked number count
         let numberCount = Number(strCount);
-
+        console.log("current like count", numberCount);
         if (e.currentTarget.classList.contains("liked")) {  // was already liked so remove like
             numberCount--;
             const store = e.currentTarget;

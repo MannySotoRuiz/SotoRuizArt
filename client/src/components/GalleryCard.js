@@ -1,7 +1,12 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
+import { useUpdateLikeCount } from "../hooks/useUpdateLikeCount";
 
 function GalleryCard(props) {
+
+    const { updateLikeCount, error } = useUpdateLikeCount();
+
+    const [artIndex, setIndex] = useState(null);
 
     const hanldeMouseOver = (event) => {
         const getAll = document.querySelectorAll(".galleryCard");
@@ -9,7 +14,18 @@ function GalleryCard(props) {
             if (getAll[i] !== event.currentTarget) {
                 getAll[i].style.opacity = "60%";
             } else {  // display heart icon
-                event.currentTarget.children[1].classList.remove("hidden");
+                setIndex(i);
+                getAll[i].children[1].classList.remove("hidden");
+                const check = JSON.parse(localStorage.getItem(`img-likecount-${props.artProject._id}`));
+                if (check) {
+                    getAll[i].children[1].children[1].innerText = check;
+                } else {
+                    if (props.artProject.likecount === 0.5) {
+                        getAll[i].children[1].children[1].innerText = 0;
+                    } else {
+                        getAll[i].children[1].children[1].innerText = props.artProject.likecount;
+                    }
+                }
             }
         }
     }
@@ -20,15 +36,55 @@ function GalleryCard(props) {
             getAll[i].style.opacity = "100%";
             getAll[i].children[1].classList.add("hidden");
         }
+        setIndex(null);
     }
 
     async function handleHeartClick(e, project) {
         e.stopPropagation(); // this is to prevent the popup from opening
 
-        if (e.currentTarget.classList.contains("likedIt")) {
-            e.currentTarget.classList.remove("likedIt");
-        } else {
-            e.currentTarget.classList.add("likedIt");
+        let currentCount = props.artProject.likecount; // get the current like count
+        const divHeart = e.currentTarget;
+
+        if (divHeart.classList.contains("likedIt")) { // for removing like
+            let current = JSON.parse(localStorage.getItem(`img-likecount-${props.artProject._id}`));
+            current--;
+            await updateLikeCount(props.artProject._id, current);
+            if (error) {
+                alert(error);
+            } else {
+                divHeart.classList.remove("likedIt"); // change heart to gray color
+                localStorage.setItem(`img-liked-${props.artProject._id}`, JSON.stringify(false));
+                document.querySelectorAll(".galleryCard")[artIndex].children[1].children[1].innerText = current;
+            }
+
+        } else {  // for adding like
+            let current = JSON.parse(localStorage.getItem(`img-likecount-${props.artProject._id}`));
+            if (current) {
+                current++;
+                await updateLikeCount(props.artProject._id, current);
+                if (error) {
+                    alert(error);
+                } else {
+                    divHeart.classList.add("likedIt"); // change heart to red color
+                    localStorage.setItem(`img-liked-${props.artProject._id}`, JSON.stringify(true));
+                    props.artProject.likecount = current;
+                    // props.allImages[artIndex].likecount = currentCount;
+                    document.querySelectorAll(".galleryCard")[artIndex].children[1].children[1].innerText = current;
+                }
+
+            } else {
+                currentCount++; // increase like count by 1
+                await updateLikeCount(props.artProject._id, currentCount);
+                if (error) {
+                    alert(error);
+                } else {
+                    divHeart.classList.add("likedIt"); // change heart to red color
+                    localStorage.setItem(`img-liked-${props.artProject._id}`, JSON.stringify(true));
+                    props.artProject.likecount = currentCount;
+                    // props.allImages[artIndex].likecount = currentCount;
+                    document.querySelectorAll(".galleryCard")[artIndex].children[1].children[1].innerText = currentCount;
+                }
+            }
         }
 
     }
@@ -41,6 +97,8 @@ function GalleryCard(props) {
                 if (getData) {
                     // console.log(document.querySelectorAll(".card-heart")[i]);
                     document.querySelectorAll(".card-heart")[i].classList.add("likedIt");
+                } else {
+                    document.querySelectorAll(".card-heart")[i].classList.remove("likedIt");
                 }
             }
         }
@@ -53,7 +111,10 @@ function GalleryCard(props) {
             ...styles[props.size]
         }}>
             <img style={{ borderRadius: '16px', width: "100%", height: "100%", objectFit: "cover"}} src={props.artProject.artImage} alt="art project"/>
-            <div onClick={(e) => handleHeartClick(e, props.artProject)} className="card-heart hidden"></div>
+            <div className="heartInfo hidden">
+                <div onClick={(e) => handleHeartClick(e, props.artProject)} className="card-heart"></div>
+                <h4>{props.artProject.likecount}</h4>
+            </div>
         </motion.div>
     )
 }
