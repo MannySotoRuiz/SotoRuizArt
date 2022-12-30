@@ -48,12 +48,6 @@ function GalleryCard(props) {
         e.stopPropagation(); // this is to prevent the popup from opening
         const divHeart = e.currentTarget;
 
-        // await getOneProject(props.artProject._id);
-        // if (oneProjectError) {
-        //     alert(oneProjectError);
-        //     console.log(oneProjectError);
-        // }
-
         let currentCount = JSON.parse(localStorage.getItem(`img-likecount-${props.artProject._id}`)); // get the current like count
 
         if (divHeart.classList.contains("likedIt")) { // for removing like

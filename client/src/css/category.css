@@ -26,12 +26,14 @@ p {
     width: 20%;
     height: 100%;
     box-shadow: 0px 8px 10px rgba(33, 33, 33, .7);
+    /* position: relative; */
     /* border-radius: 90%; */
     /* outline: 2px solid blue; */
 }
 .categoryCardImg {
     width: 100%;
     height: 80%;
+    position: relative;
     cursor: pointer;
     /* outline: 3px solid red; */
 }
@@ -122,4 +124,29 @@ p {
 .tag-machine-learning {
     color: #fff;
     background: var(--purple-light)
+}
+
+.cardLikeInfo {
+    width: 100%;
+    height: 40px;
+    position: absolute;
+    bottom: 2%;
+}
+
+.cardLikeInfo h4 {
+    /* outline: 3px solid green; */
+    position: absolute;
+    bottom: 0%;
+    left: 22%;
+    color: white;
+}
+.cardLikeInfo p {
+    margin: 0;
+    /* outline: 3px solid green; */
+    position: absolute;
+    bottom: 3%;
+    left: 22%;
+    color: white;
+    font-size: x-large;
+    font-weight: 600;
 }

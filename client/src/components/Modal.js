@@ -42,7 +42,6 @@ export default function Modal({ selected, setSelected, list }) {
                 } else { // did not like this image previously
                     document.querySelectorAll(".heart-like-button")[0].classList.remove("liked");
                     const getIt = await getSingleProject();
-                    console.log(getIt[0]);
                     const likeCount = getIt[0].likecount;
                     document.querySelectorAll(".likeCount")[0].innerText = likeCount;
                 }
@@ -94,6 +93,9 @@ export default function Modal({ selected, setSelected, list }) {
                 document.querySelectorAll(".likeCount")[0].innerText = numberCount;
                 store.classList.remove("liked");
                 localStorage.setItem(`img-liked-${id}`, JSON.stringify(false));
+                const getAllProjects = JSON.parse(localStorage.getItem("allCategoryProjects"));
+                getAllProjects[artIndex].likecount = numberCount;
+                localStorage.setItem("allCategoryProjects", JSON.stringify(getAllProjects));
             }
 
         } else {  // was not liked previously so now like it
@@ -105,6 +107,9 @@ export default function Modal({ selected, setSelected, list }) {
                 document.querySelectorAll(".likeCount")[0].innerText = numberCount;
                 store.classList.add("liked");
                 localStorage.setItem(`img-liked-${id}`, JSON.stringify(true));
+                const getAllProjects = JSON.parse(localStorage.getItem("allCategoryProjects"));
+                getAllProjects[artIndex].likecount = numberCount;
+                localStorage.setItem("allCategoryProjects", JSON.stringify(getAllProjects));
             }
         }
     }

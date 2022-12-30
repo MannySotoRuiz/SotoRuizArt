@@ -4,9 +4,12 @@ import { motion } from "framer-motion";
 import Modal from "./Modal";
 import Header from "./Header";
 import LeftPanel from "./LeftPanel";
+import { useGetOneProject } from "../hooks/useGetOneProject";
+import { useUpdateLikeCount } from "../hooks/useUpdateLikeCount";
 
 const Category = () => {
-
+    const { updateLikeCount, error: likeError } = useUpdateLikeCount();
+    const { getOneProject, error: oneProjectError } = useGetOneProject();
     const { id } = useParams(); // get the category picked from user
     const location = useLocation();
     const splitPath = location.pathname.split("/"); // get the current path that user is on
@@ -16,6 +19,84 @@ const Category = () => {
     const [fetchError, setError] = useState(null);  // used if error when fetching from backend
     const [selected, setSelected] = useState(null);
     const [allProjects, setProjects] = useState([]);
+    const [artIndex, setIndex] = useState(null);
+
+    async function handleMoverOverCard(e, id) {
+        const getAll = document.querySelectorAll(".categoryCard");
+        let idx;
+        let ifFound = false;
+        
+        for (let i = 0; i < getAll.length; i++) {
+            if (getAll[i] === e.currentTarget) {
+                ifFound = true;
+                idx = i;
+                setIndex(i);
+                getAll[i].children[0].children[1].classList.remove("hidden");
+            } else {
+                getAll[i].children[0].style.opacity = "60%";
+            }
+        }
+        if (ifFound) {
+            await getOneProject(id);
+            if (oneProjectError) {
+                alert(oneProjectError);
+                console.log(oneProjectError);
+            }
+            const getFetch = JSON.parse(localStorage.getItem(`fetchedProject`)); // get the current like count
+            let currentFetchedCount = getFetch[0].likecount;
+            if (currentFetchedCount === 0.5) {
+                currentFetchedCount = 0;
+            }
+            getAll[idx].children[0].children[1].children[1].innerText = currentFetchedCount;
+        }
+    }
+
+    const hanldeMouseOutCard = () => {
+        const getAll = document.querySelectorAll(".categoryCard");
+        for (let i = 0; i < getAll.length; i++) {
+            getAll[i].style.opacity = "100%";
+        }
+        setIndex(null);
+    }
+
+    async function handleHeartClick(e, project) {
+        e.stopPropagation(); // this is to prevent the popup form opening
+        const divHeart = e.currentTarget;
+        const getArtObject = JSON.parse(localStorage.getItem("fetchedProject"));
+        let currentCount = getArtObject[0].likecount;
+
+        if (divHeart.classList.contains("likedIt")) {   // for removing like
+            currentCount--;
+            await updateLikeCount(project._id, currentCount);
+            if (likeError) {
+                alert(likeError);
+                console.log(likeError);
+            } else {
+                divHeart.classList.remove("likedIt");
+                localStorage.setItem(`img-liked-${project._id}`, JSON.stringify(false));
+                document.querySelectorAll(".cardLikeInfo")[artIndex].children[1].innerText = currentCount;
+                const getAllProjects = JSON.parse(localStorage.getItem("allCategoryProjects"));
+                getAllProjects[artIndex].likecount = currentCount;
+                localStorage.setItem("allCategoryProjects", JSON.stringify(getAllProjects));
+            }
+        
+        } else {  // for adding like
+            currentCount++;
+            await updateLikeCount(project._id, currentCount);
+            if (likeError) {
+                alert(likeError);
+                console.log(likeError);
+            } else {
+                divHeart.classList.add("likedIt");
+                localStorage.setItem(`img-liked-${project._id}`, JSON.stringify(true));
+                document.querySelectorAll(".cardLikeInfo")[artIndex].children[1].innerText = currentCount;
+                const getAllProjects = JSON.parse(localStorage.getItem("allCategoryProjects"));
+                getAllProjects[artIndex].likecount = currentCount;
+                localStorage.setItem("allCategoryProjects", JSON.stringify(getAllProjects));
+            }
+        }
+
+    }
 
     useEffect(() => {
         const getAllArt = async () => {
@@ -27,7 +108,6 @@ const Category = () => {
                 name = "Emily";
             }
             const getProjects = await fetchImages(name, id);
-            console.log(getProjects);
             setProjects(getProjects);
             const allRows = Math.ceil(getProjects.length / 3);
             let imgsGroup = [];
@@ -57,7 +137,8 @@ const Category = () => {
                 console.log("successfully fetched art projects");
                 if (json.length === 0) {
                     setError("No art projects exist");
-                } 
+                }
+                localStorage.setItem("allCategoryProjects", JSON.stringify(json));
                 return json;
             } else {
                 console.log("Error when fetching art projects");
@@ -68,14 +149,46 @@ const Category = () => {
     }, [id]);
 
     const Card = ({ item }) => {
-        return (
-            <motion.div layoutId={`card-${item._id}`} className="categoryCard" onClick={() => setSelected(item)}>
-                <div className="categoryCardImg">
-                    <img src={item.artImage} alt={item.title}/>
-                </div>
-                <div className="categoryCardText"><p>{item.title}</p></div>
-            </motion.div>
-        );
+        if (item.likecount === 0.5) {
+            item.likecount = 0;
+        }
+
+        const check = JSON.parse(localStorage.getItem(`img-liked-${item._id}`));
+        const getAllProjects = JSON.parse(localStorage.getItem("allCategoryProjects"));
+        let likeCounter;
+        for (let i = 0; i < getAllProjects.length; i++) {
+            if (getAllProjects[i]._id === item._id) {
+                likeCounter = getAllProjects[i].likecount;
+                break;
+            }
+        }
+        if (check) {
+            return (
+                <motion.div onMouseOut={hanldeMouseOutCard} onMouseOver={(e) => handleMoverOverCard(e, item._id)} className="categoryCard" onClick={() => setSelected(item)}>
+                    <div className="categoryCardImg">
+                        <img src={item.artImage} alt={item.title}/>
+                        <div className="cardLikeInfo hidden">
+                            <div onClick={(e) => handleHeartClick(e, item)} className="card-heart likedIt"></div>
+                            <h4>{likeCounter}</h4>
+                        </div>
+                    </div>
+                    <div className="categoryCardText"><p>{item.title}</p></div>
+                </motion.div>
+            );
+        } else {
+            return (
+                <motion.div onMouseOut={hanldeMouseOutCard} onMouseOver={(e) => handleMoverOverCard(e, item._id)} className="categoryCard" onClick={() => setSelected(item)}>
+                    <div className="categoryCardImg">
+                        <img src={item.artImage} alt={item.title}/>
+                        <div className="cardLikeInfo hidden">
+                            <div onClick={(e) => handleHeartClick(e, item)} className="card-heart"></div>
+                            <h4>{likeCounter}</h4>
+                        </div>
+                    </div>
+                    <div className="categoryCardText"><p>{item.title}</p></div>
+                </motion.div>
+            );
+        }
     }
 
     const leftPanelList = [
